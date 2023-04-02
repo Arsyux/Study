@@ -1,6 +1,6 @@
 # Study
 
-<License>
+< License >
  - MIT
 
 < Settings >
