@@ -3,18 +3,18 @@ package chap02;
 public class Sample01 {
 
 	public static void main(String[] args) {
-		// ±âº» ÀÚ·áÇü (Primitive Type)
-		
-		// ³í¸®Çü (boolean)
+		// ê¸°ë³¸ ìë£Œí˜• (Primitive Type)
+
+		// ë…¼ë¦¬í˜• (boolean)
 		boolean IsBoolean = true;
-		
-		// ¹®ÀÚÇü (char)
-		// Java¿¡¼­´Â À¯´ÏÄÚµå¸¦ »ç¿ëÇÏ¿© 2byte¸¦ »ç¿ëÇÔ.
-		// 1¹ÙÀÌÆ®ÀÇ ASCII Code °ªÀ¸·Îµµ Ç¥Çö °¡´É.
-		// ¸®ÅÍ·²Àº ÇÑ ¹®ÀÚ¸¸ ÀÔ·ÂÀÌ °¡´ÉÇÏ°í ¹®ÀÚ ¾ÕµÚ·Î ÀÛÀº µû¿ÈÇ¥(')·Î ±¸ºĞÇÔ.
+
+		// ë¬¸ìí˜• (char)
+		// Javaì—ì„œëŠ” ìœ ë‹ˆì½”ë“œë¥¼ ì‚¬ìš©í•˜ì—¬ 2byteë¥¼ ì‚¬ìš©í•¨.
+		// 1ë°”ì´íŠ¸ì˜ ASCII Code ê°’ìœ¼ë¡œë„ í‘œí˜„ ê°€ëŠ¥.
+		// ë¦¬í„°ëŸ´ì€ í•œ ë¬¸ìë§Œ ì…ë ¥ì´ ê°€ëŠ¥í•˜ê³  ë¬¸ì ì•ë’¤ë¡œ ì‘ì€ ë”°ì˜´í‘œ(')ë¡œ êµ¬ë¶„í•¨.
 		char IsChar = 'A';
-		
-		// Á¤¼öÇü
+
+		// ì •ìˆ˜í˜•
 		// Byte (-128~127) signed 1Byte
 		byte IsByte = 127;
 		// Short (-32,768~32,767) signed 2Byte
@@ -23,15 +23,15 @@ public class Sample01 {
 		int IsInt = 2147483647;
 		// IsLong signed 8Byte
 		long IsLong = 1000L;
-		
-		// ½Ç¼öÇü
+
+		// ì‹¤ìˆ˜í˜•
 		// float
-		// À¯È¿ ¼ıÀÚ : ¼Ò¼öÁ¡ ÀÌÇÏ 6ÀÚ¸®
+		// ìœ íš¨ ìˆ«ì : ì†Œìˆ˜ì  ì´í•˜ 6ìë¦¬
 		float IsFloat = 1.234f;
-		// À¯È¿ ¼ıÀÚ : ¼Ò¼öÁ¡ ÀÌÇÏ 15ÀÚ¸®
+		// ìœ íš¨ ìˆ«ì : ì†Œìˆ˜ì  ì´í•˜ 15ìë¦¬
 		double IsDouble = 3.1415926;
-		
-		// Áö½ÃÀÚ
+
+		// ì§€ì‹œì
 		// Boolean
 		System.out.printf("%b\n", IsBoolean);
 		// Decimal
@@ -41,31 +41,31 @@ public class Sample01 {
 		// Hexadecimal
 		System.out.printf("%x\n", IsInt);
 		System.out.printf("%X\n", IsLong);
-		// ½Ç¼öÇü 10Áø¼ö
+		// ì‹¤ìˆ˜í˜• 10ì§„ìˆ˜
 		System.out.printf("%f\n", IsFloat);
-		// Áö¼öÇüÅÂ Ç¥Çö
+		// ì§€ìˆ˜í˜•íƒœ í‘œí˜„
 		System.out.printf("%e\n", IsDouble);
-		// ¹®ÀÚ
+		// ë¬¸ì
 		System.out.printf("%c\n", IsChar);
-		// ¹®ÀÚ¿­
+		// ë¬¸ìì—´
 		System.out.printf("%s", "Hello, World!");
-		
-		// È®ÀåÆ¯¼ö¹®ÀÚ
-		// °³Çà
+
+		// í™•ì¥íŠ¹ìˆ˜ë¬¸ì
+		// ê°œí–‰
 		System.out.println("\n");
 		// Tab
 		System.out.println("\t");
-		// Ä³¸®Áö ¸®ÅÏ
+		// ìºë¦¬ì§€ ë¦¬í„´
 		System.out.println("\r");
-		// \ Ç¥½Ã
+		// \ í‘œì‹œ
 		System.out.println("\\");
-		// " Ç¥½Ã
+		// " í‘œì‹œ
 		System.out.println("\"");
-		// ' Ç¥½Ã
+		// ' í‘œì‹œ
 		System.out.println("\'");
-		// ¹é½ºÆäÀÌ½º (ÇÑÄ­ ¾ÕÀ¸·Î)
+		// ë°±ìŠ¤í˜ì´ìŠ¤ (í•œì¹¸ ì•ìœ¼ë¡œ)
 		System.out.println("\b");
-		// 4ÀÚ¸®ÀÇ 16Áø¼ö·Î À¯´ÏÄÚµå¸¦ Ãâ·ÂÇÒ¶§ »ç¿ë
+		// 4ìë¦¬ì˜ 16ì§„ìˆ˜ë¡œ ìœ ë‹ˆì½”ë“œë¥¼ ì¶œë ¥í• ë•Œ ì‚¬ìš©
 		System.out.println("\u0041");
 	}
 }
