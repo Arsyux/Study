@@ -1,17 +1,31 @@
-/*
- * Test Memo
-*/
 package chap03;
 
+/**
+ * <p>
+ * 코드 템플릿 공부
+ * </p>
+ * <p>
+ * Description에는 첫번째 p태그만 보임
+ * </p>
+ * 
+ * @author Arsyux
+ *
+ */
 public class Sample01 {
 
+	/**
+	 * <p>
+	 * 생성자 Sample01
+	 * </p>
+	 * <p>
+	 * 부가 설명
+	 * </p>
+	 */
+	public Sample01() {
+
+	}
+
 	public static void main(String[] args) {
-
-		// Javadoc 생성시 한글 주석이 들어가면 에러가 발생한다.
-		// -locale ko_KR -encoding UTF-8 -charset UTF-8 -docencoding UTF-8
-		// --enable-preview
-		// 위의 내용을 추가하면 해결되야한다는데, 오히려 에러가 발생함.
-
 		// 한줄 주석
 		// 실무에서는 미리 코딩 스타일을 정의하여 사용함.
 		// 1. 상단에 주석을 표기하는 경우
@@ -38,7 +52,12 @@ public class Sample01 {
 	}
 
 	/**
+	 * <p>
 	 * This method generates random numbers.
+	 * </p>
+	 * <p>
+	 * 부가 설명 테스트
+	 * </p>
 	 * 
 	 * @param Number An integer value for generating random numbers.
 	 * @return Generated random value.
