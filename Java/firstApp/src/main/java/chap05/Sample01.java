@@ -1,8 +1,8 @@
 package chap05;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Sample01 {
 	public static void main(String[] args) {
@@ -73,8 +73,13 @@ public class Sample01 {
 		System.out.println(Arrays.binarySearch(names5, "B"));
 		// Arrays.asList()
 		// List자료형에 배열을 쉽게 추가하는 메서드
-		int[] arr_int1 = { 1, 2, 3 };
-		int[] arr_int2 = { 5, 6, 7 };
-		
+		int[] arr_int1 = new int[3];
+		arr_int1[0] = 1;
+		arr_int1[1] = 2;
+		arr_int1[2] = 3;
+		List<Integer> lst_int1 = new ArrayList<Integer>();
+		// asList로 List에 추가할 경우 길이가 고정되어 추가, 삭제가 안됨.
+		lst_int1 = Arrays.asList(1, 2, 3);
+		System.out.println(lst_int1);
 	}
 }
