@@ -28,21 +28,43 @@ abstract class Car {
 class ElecCar extends Car {
 
 	public ElecCar(String color, String manufacturer) {
-		this.color = color;
-		this.manufacturer = manufacturer;
+		super(color, manufacturer);
 	}
 
 	@Override
 	public String fillUp() {
 		return "전기";
 	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+}
+
+class GasolCar extends Car {
+
+	public GasolCar(String color, String manufacturer) {
+		super(color, manufacturer);
+	}
+
+	@Override
+	public String fillUp() {
+		return "휘발유";
+	}
 }
 
 public class Sample01 {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ElecCar ec = new ElecCar("red", "현대");
+		ec.setColor("white");
+		ec.printInfo();
+		Car c = new ElecCar("blue", "르노");
+		// Car에 setColor가 없어서 사용 불가능
+		// c.setColor("gray");
+		c.printInfo();
+		GasolCar gc = new GasolCar("black", "기아");
+		gc.printInfo();
 	}
 
 }
