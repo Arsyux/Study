@@ -60,11 +60,13 @@ public class Sample01 {
 		ec.setColor("white");
 		ec.printInfo();
 		Car c = new ElecCar("blue", "르노");
+		// 다형성
 		// Car에 setColor가 없어서 사용 불가능
 		// c.setColor("gray");
 		c.printInfo();
 		GasolCar gc = new GasolCar("black", "기아");
 		gc.printInfo();
+		
 	}
 
 }
