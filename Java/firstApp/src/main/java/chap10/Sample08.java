@@ -60,6 +60,7 @@ class Group<G> {
 	// 반면 제네릭 타입의 경우 Sub가 Super의 하위 타입이어도 ArrayList<Sub>는 ArrayList<Super>의 하위 타입이 아님.
 	// 이런 경우를 불공변하다고 함.
 	// 제네릭은 불공변하기 때문에 제네릭으로 객체를 생성하는건 불가능함.
+	@SuppressWarnings("unchecked")
 	private G[] group = (G[]) new Object[listCount];
 
 	public void add(G g) {
