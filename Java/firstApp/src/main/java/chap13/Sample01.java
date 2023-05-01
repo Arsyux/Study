@@ -23,6 +23,16 @@ public class Sample01 {
 				, date.getYear() + 1900
 		);
 		
+		System.out.println("\n== Calendar ==");
+		System.out.printf("%s %s %02d %02d:%02d:%02d KST %d\n"
+				, getWeekName(cal.get(Calendar.DAY_OF_WEEK))
+				, getMonthName(cal.get(Calendar.DAY_OF_MONTH))
+				, cal.get(Calendar.DAY_OF_MONTH)
+				, cal.get(Calendar.HOUR_OF_DAY)
+				, cal.get(Calendar.MINUTE)
+				, cal.get(Calendar.SECOND)
+				, cal.get(Calendar.YEAR)
+		);
 	}
 
 	public static String getWeekName(int WeekNumber) {
