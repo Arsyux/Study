@@ -6,6 +6,9 @@ import java.util.Date;
 public class Sample01 {
 
 	public static void main(String[] args) {
+		// JDK 7이하 -> Calendar
+		// JDK 8이상 -> LocalDateTime 
+		
 		// 추상 클래스이므로 생성자를 사용하여 인스턴스를 생성할 수 없어서 static 메서드를 호출하여 생성
 		Calendar cal = Calendar.getInstance();
 		Date date = cal.getTime();
