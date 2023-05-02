@@ -18,5 +18,4 @@ public class Sample05 {
 	// @SafeVarargs
 	// @FuntionalInterface
 	// -> 함수형 인터페이스를 의미함
-	
 }
