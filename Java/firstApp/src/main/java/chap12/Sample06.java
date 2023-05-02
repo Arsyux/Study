@@ -40,6 +40,8 @@ public class Sample06 {
 			System.out.println("목적지를 확인해주세요.");
 			break;
 		}
+		
+		sc.close();
 	}
 
 }

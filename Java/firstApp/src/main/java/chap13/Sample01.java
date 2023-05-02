@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Sample01 {
 
+	@SuppressWarnings("deprecation")
 	public static void main(String[] args) {
 		// JDK 7이하 -> Calendar
 		// JDK 8이상 -> LocalDateTime 

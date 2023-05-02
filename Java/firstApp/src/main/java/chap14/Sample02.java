@@ -12,7 +12,6 @@ import static java.lang.annotation.ElementType.TYPE_PARAMETER;
 import static java.lang.annotation.ElementType.TYPE_USE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -109,7 +108,7 @@ public class Sample02 {
 
 	public static void main(String[] args) {
 		annoTest<@Anno14 String> annoStr = new annoTest<>();
-		
+		System.out.println(annoStr);
 	}
 
 	@Anno06
