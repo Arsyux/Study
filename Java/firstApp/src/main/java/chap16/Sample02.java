@@ -25,6 +25,13 @@ public class Sample02 {
 		// Supplier는 반환할 자료형을 제네릭으로 자료형을 선언한 후에 실행문에 제네릭으로 선언한 자료형을 반환할 경우에 사용
 		Supplier<String> s = () -> "Supplier";
 		System.out.println(s.get());
+		// return문을 넣어서 구현
+		Supplier<String> s2 = () -> {
+			return "Supplier2";
+		};
+		System.out.println(s2.get());		
 	}
 
 }
+
+
