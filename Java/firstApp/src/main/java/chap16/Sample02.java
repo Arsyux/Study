@@ -1,8 +1,10 @@
 package chap16;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import lombok.AllArgsConstructor;
@@ -39,8 +41,7 @@ public class Sample02 {
 		};
 		System.out.println(s2.get());
 
-		// 참조 자료형으로 클래스를 만들어서 클래스의 멤버 변수에 생성자를 통해서 값을 받고 매개변수로 람다식을 이용하여 멤버 변수의 내용을
-		// 출력해보겠습니다.
+		// 참조 자료형으로 클래스를 만들어서 클래스의 멤버 변수에 생성자를 통해서 값을 받고 매개변수로 람다식을 이용하여 멤버 변수의 내용 출력하기.
 		MessageCenter mc = getMsg(() -> new MessageCenter("MessageCenter"));
 		System.out.println(mc);
 
@@ -58,7 +59,48 @@ public class Sample02 {
 			x.setSalary(x.getSalary() * 2);
 			System.out.println(x);
 		});
-		
+
+		// Function 함수형 인터페이스
+		// Fuction 함수형 인터페이스는 Consumer와는 다르게 결과를 반환할 수 있음.
+		Function<Integer, String> f = (i) -> {
+			switch (i) {
+			case 1:
+				return "one";
+			case 2:
+				return "two";
+			case 3:
+				return "three";
+			case 4:
+				return "four";
+			case 5:
+				return "five";
+			default:
+				throw new IllegalArgumentException("Unexpected value: " + i);
+			}
+		};
+		System.out.println(f.apply(3));
+		// compose()는 선행 함수를 실행한 후 현재의 람다식을 수행함.
+		int myMoney = 100000;
+		// 10% 세금을 납부
+		Function<Integer, Integer> work = (money) -> {
+			System.out.printf("* [%d] 세금을 납부합니다.\n", (int) (money * 0.1));
+			return money = (int) (money * 0.9);
+		};
+		// 수입금을 더함
+		Function<Integer, Integer> before = (income) -> {
+			System.out.printf("* [%d] 수입이 발생했습니다.\n", income);
+			return income;
+		};
+		// work 람다식 호출
+		myMoney = work.apply(myMoney);
+		printInfo(myMoney);
+		myMoney += work.compose(before).apply(30000);
+		printInfo(myMoney);
+	}
+
+	public static void printInfo(int myMoney) {
+		DecimalFormat df = new DecimalFormat("##,###,###");
+		System.out.println("잔액 : " + df.format(myMoney));
 	}
 
 	public static MessageCenter getMsg(Supplier<MessageCenter> mc) {
