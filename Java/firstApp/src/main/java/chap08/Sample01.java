@@ -1,5 +1,5 @@
 // 패키지
-package chap08.vo;
+package chap08;
 
 // 클래스
 class CLASSVO {

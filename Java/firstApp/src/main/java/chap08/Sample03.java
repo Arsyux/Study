@@ -1,4 +1,4 @@
-package chap08.vo;
+package chap08;
 
 @FunctionalInterface
 interface Runnable {

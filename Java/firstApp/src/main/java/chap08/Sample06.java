@@ -1,4 +1,4 @@
-package chap08.vo;
+package chap08;
 
 // lombok 사용
 // @Data이 포함하는 것
