@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -105,9 +104,9 @@ public class Sample09 {
 		List<Long> list3 = Arrays.asList(100L, 100L, 61L, 85L, 91L);
 		System.out.println("평균 : " + list3.stream().collect(Collectors.averagingLong(i -> i)));
 
-		List<Score> list4 = Arrays.asList(new Score("A", 61, 71, 81), new Score("B", 62, 72, 82),
+		List<Score> scores = Arrays.asList(new Score("A", 61, 71, 81), new Score("B", 62, 72, 82),
 				new Score("C", 100, 100, 61));
-		double averageMat = list4.stream().collect(Collectors.averagingInt(Score::getMat));
+		double averageMat = scores.stream().collect(Collectors.averagingInt(Score::getMat));
 		System.out.println("수학 평균 : " + averageMat);
 
 		// counting()
@@ -128,9 +127,9 @@ public class Sample09 {
 		// 요소 중 제일 큰 값과 작은 값을 Optinal<T>객체로 반환 받는 메서드
 		// Comparator.comparing() 메서드를 이용해서 비교한 결과 중 최대/최소인 요소를 반환
 		System.out.println("국어 점수가 최저인 학생");
-		list4.stream().collect(Collectors.minBy(Comparator.comparing(Score::getKor))).ifPresent(System.out::println);
+		scores.stream().collect(Collectors.minBy(Comparator.comparing(Score::getKor))).ifPresent(System.out::println);
 		System.out.println("영어 점수가 최고인 학생");
-		list4.stream().collect(Collectors.maxBy(Comparator.comparing(Score::getEng))).ifPresent(System.out::println);
+		scores.stream().collect(Collectors.maxBy(Comparator.comparing(Score::getEng))).ifPresent(System.out::println);
 
 		// joining()
 		// joining() 메서는 스트림 요소들을 하나로 조합하는 메서드임
@@ -158,7 +157,7 @@ public class Sample09 {
 		// 수학 점수를 기준으로 A,B,C,D,F 학점으로 분류
 		// Stream으로 넘어오는 Score의 getMat() 메서드로 수학 점수를 받아서 학점을 기준으로 그룹핑하여
 		// 학점의 대상이 되는 이름을 출력함
-		Map<String, List<Score>> result = list4.stream().collect(Collectors.groupingBy(s -> {
+		Map<String, List<Score>> result = scores.stream().collect(Collectors.groupingBy(s -> {
 			String grade = "F";
 			int score = s.getMat();
 			if (score > 90) {
@@ -189,20 +188,74 @@ public class Sample09 {
 		// partitioningBy()
 		// groupBy()메서드와 비슷하지만 차이는 Fuction함수형 인터페이스와 Predicate함수형 인터페이스를 인자로 사용하는 차이가 있음
 		// 수학 80점 이상인 사람과 그렇지 않은 사람을 구분
-		Map<Boolean, List<Score>> result2 = list4.stream().collect(Collectors.partitioningBy(s -> {
+		Map<Boolean, List<Score>> result2 = scores.stream().collect(Collectors.partitioningBy(s -> {
 			return (s.getMat() > 80) ? true : false;
 		}));
 		System.out.println("수학 80이상인 학생");
 		List<Score> list8 = result2.get(true);
 		list8.stream().forEach(x -> System.out.println(x.getName()));
-
 		// 수학 80점 이상인 사람과 그렇지 않은 사람은 각각 몇명인지?
-		Map<Boolean, Long> count = list4.stream().collect(Collectors.partitioningBy(s -> {
+		Map<Boolean, Long> count = scores.stream().collect(Collectors.partitioningBy(s -> {
 			return (s.getMat() > 80) ? true : false;
 		}, Collectors.counting()));
 		System.out.println("80점 이상인 학생의 수 : " + count.get(true));
 		System.out.println("80점 미만인 학생의 수 : " + count.get(false));
 
+		// distinct()
+		// 중복제거
+		List<String> ani5 = Arrays.stream(animals).distinct().collect(Collectors.toList());
+		System.out.println(ani5);
+
+		// count()
+		// 개수
+		System.out.println(IntStream.rangeClosed(12, 125).count());
+		// counting()썼을 때
+		System.out.println(IntStream.rangeClosed(12, 125).boxed().collect(Collectors.counting()));
+
+		// min(), max()
+		// 최소, 최대
+		System.out.println(IntStream.rangeClosed(333, 1553).boxed().min(Integer::compare).get());
+		System.out.println(IntStream.rangeClosed(333, 1553).boxed().max(Integer::compare).get());
+
+		// sum()
+		// 합
+		System.out.println(IntStream.rangeClosed(1, 10).sum());
+
+		// average()
+		// 평균
+		System.out.println(IntStream.rangeClosed(1, 10).average().getAsDouble());
+
+		// anyMatch(), allMatch(), noneMatch()
+		// 이 세 메서드는 Predicate 함수형 인터페이스를 사용하여 이 결과의 여부에 따라서 true와 false를 반환
+		// Predicate 함수형 인터페이스는 1개의 매개변수와 boolean 자료형의 반환으로 구성되어 있기 때문에
+		// 람다식으로 조건식을 넣어서 boolean으로 결과가 나올 수 있도록 구현하면 됨
+		List<Score> scores2 = Arrays.asList(new Score("A", 61, 31, 31), new Score("B", 62, 32, 82),
+				new Score("C", 100, 30, 31));
+		// 하나라도 참이면 true
+		boolean b1 = scores2.stream().anyMatch(x -> x.getMat() > 39);
+		System.out.println("수학 40점을 넘는 사람이 있는지? " + b1);
+		// 모두가 참이면 true
+		boolean b2 = scores2.stream().allMatch(x -> x.getKor() > 39);
+		System.out.println("모든 학생이 국어 40점을 넘었는지? " + b2);
+		// 모두가 거짓이면 true
+		boolean b3 = scores2.stream().noneMatch(x -> x.getEng() > 39);
+		System.out.println("영어가 모두 40점을 안넘는지? " + b3);
+
+		// findAny(), findFirst()
+		// findAny()는 스트림 요소 중에 조건에 맞는 첫 번째 요소를 찾음.
+		// findFirst()는 첫번째 요소를 찾음
+
+		List<Integer> list9 = Arrays.asList(4, 6, 2, 8, 10);
+		// 요소들 중에 제일 먼저 찾은 요소를 얻는다.
+		list9.stream().findAny().ifPresent(System.out::println);
+		// 요소들 중에 첫 요소를 찾아서 얻는다.
+		list9.stream().findFirst().ifPresent(System.out::println);
+		System.out.println();
+		list9.stream().filter(x -> x > 2).findAny().ifPresent(System.out::println);
+		// 병렬로 처리될 경우 값이 달라질 수 있음
+		list9.parallelStream().filter(x -> x > 2).findAny().ifPresent(System.out::println);
+		list9.stream().filter(x -> x>2).findFirst().ifPresent(System.out::println);
+		list9.parallelStream().filter(x -> x > 2).findFirst().ifPresent(System.out::println);
 	}
 
 }
