@@ -14,7 +14,7 @@ public class Sample01_FileIO {
 	public static void main(String[] args) {
 
 		String path = "src/main/java/chap19_File";
-
+		
 		// 파일 입출력
 		// 파일 쓸 때 - FileOutputStream
 		// 파일 읽을 때 - FileInputStream
