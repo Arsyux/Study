@@ -30,7 +30,7 @@ public class Sample04_Zip {
 		String result = "";
 		try (FileOutputStream fos = new FileOutputStream(dirPath + File.separator + "test.zip");
 				ZipOutputStream zos = new ZipOutputStream(fos)) {
-			Arrays.stream(files).forEach(x -> {
+			Arrays.stream(files).filter(x -> !x.contains(".java")).forEach(x -> {
 				File f = new File(path + File.separator + x);
 				try (FileInputStream fis = new FileInputStream(f)) {
 					ZipEntry zipEntry = new ZipEntry(f.getName());
