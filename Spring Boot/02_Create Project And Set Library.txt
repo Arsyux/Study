@@ -1,0 +1,20 @@
+<< 스프링 부트 프로젝트 생성 및 라이브러리 설정 >>
+
+1. 프로젝트 생성
+ - [File] -> [New] -> [Spring Starter Project] 선택
+ - 프로젝트 설정
+Name : 프로젝트 이름 -> JBlogWeb
+Type : 라이브러리 관리 도구 -> Maven
+Packaging : 패키징 파일의 형식 -> Jar
+Group : 단체나 회사 정보(도메인 이름) -> com.arsyux
+Package : 기본으로 생성할 루트 패키지 -> com.arsyux.jblog
+
+2. 라이브러리 의존성 추가
+ - 스프링 부트 버전 선택 (3.0.6 사용하였음. 교재는 2.6.7)
+ - 선택한 스프링 부트 버전에 따라서 관련된 라이브러리의 버전도 자동으로 결정됨.
+ - 이클립스가 제공하는 스프링 부트의 버전은 변경될 수 있음.
+ - Developer Tools에서 [Spring Boot DevTools]와 [Lombok]을 선택함.
+ - SQL에서 [Spring Data JPA], [MyBatis Framwork], [H2 Database]을 선택함.
+ - Web에서 [Spring Web]을 선택함.
+ - 여기에서 Finish하여도 되고, Next를 누르면 Url들이 나오는데, Full Url을 복사하여 프로젝트 생성을 요청하면 압축파일(.zip)형태로 프로젝트를 생성할 수도 있음.
+ - 압축 파일 형태의 프로젝트는 이클립스에서 Import하여 사용할 수 있음.
