@@ -1,0 +1,30 @@
+<< 프로퍼티 파일 설정 >>
+
+1. 프로퍼티 파일 설정
+ - JBlogWeb프로젝트의 src/main/resources의 application.properties에 다음의 내용 추가
+# 서버 설정
+server.port=8080
+server.servlet.context-path=/
+server.servlet.encoding.charset=UTF-8
+
+# 뷰리졸버 설정
+spring.mvc.view.prefix=/WEB-INF/jblog/
+spring.mvc.view.suffix=.jsp
+ - 한글 주석때문에 Save Problems 알람창이 발생하면 Save as UTF-8 클릭
+
+2. YAML 파일 설정
+ - application.properties 파일의 확장자를 yml로 변경하고 다음과 같이 수정
+# 서버 설정
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+
+# 뷰리졸버 설정
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/jblog/
+      suffix: .jsp
