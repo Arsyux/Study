@@ -23,11 +23,9 @@ public class HelloController {
 
 	@GetMapping("/jsp")
 	public String jsp(Model model) {
-		/*
-		원래 스프링 부트에서 동적 콘텐츠의 위치는 src/main/resources/templates 폴더임.
-		jsp는 스프링 부트에서 지원하는 템플릿이 아니므로 jsp를 위한 별도의 폴더 구조를 만들어야함
-		src/main에 webapp/WEB-INF/jblog 폴더를 생성한 후 jsp파일을 작성함.
-		*/
+		// 원래 스프링 부트에서 동적 콘텐츠의 위치는 src/main/resources/templates 폴더임.
+		// jsp는 스프링 부트에서 지원하는 템플릿이 아니므로 jsp를 위한 별도의 폴더 구조를 만들어야함.
+		// src/main에 webapp/WEB-INF/jblog 폴더를 생성한 후 jsp파일을 작성함.
 		System.out.println("JSP 파일이 요청됨");
 		model.addAttribute("username", "Arsyux");
 		return "hello";
