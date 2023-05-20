@@ -1,5 +1,7 @@
 package com.arsyux.jblog.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -13,8 +15,7 @@ public interface UserMapper {
 
 	// 개발자가 @Mapper가 설정된 인터페이스를 작성하면
 	// 마이바티스에서 자동으로 매퍼 인터페이스가 구현된 클래스를 제공함
-	@Insert("INSERT INTO USERS(ID, USERNAME, PASSWORD, EMAIL)"
-			+ "VALUES((SELECT NVL(MAX(ID), 0) + 1 FROM USERS), #{username}, #{password}, #{email})")
+	@Insert("INSERT INTO USERS(ID, USERNAME, PASSWORD, EMAIL) VALUES((SELECT NVL(MAX(ID), 0) + 1 FROM USERS), #{username}, #{password}, #{email})")
 	public void insertUser(User user);
 	
 	@Update("UPDATE USERS PASSWORD = #{password}, EMAIL = #{email} WHERE ID = #{id}")
@@ -24,9 +25,9 @@ public interface UserMapper {
 	public void deleteUser(User user);
 	
 	@Select("SELECT * FROM USERS WHERE USERNAME = #{username}")
-	public void getUser(User user);
+	public User getUser(User user);
 	
 	@Select("SELECT * FROM USERS ORDER BY USERNAME DESC")
-	public void getUserList();
+	public List<User> getUserList();
 	
 }
