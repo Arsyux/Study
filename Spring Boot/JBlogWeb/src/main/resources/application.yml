@@ -12,3 +12,11 @@ spring:
     view:
       prefix: /WEB-INF/jblog/
       suffix: .jsp
+  # 애플리케이션을 특정 데이터베이스와 연결하려면 데이터소스가 필요함
+  # 이를 위해 application.yml파일에 데이터소스 설정을 추가함
+  # 데이터소스 설정
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:     
