@@ -45,10 +45,10 @@ spring:
       # JPA에서 엔티티클래스는 테이블과 매핑됨. 따라서 엔티티 클래스와 매핑될 테이블이 존재하지 않으면 엔티티 클래스를 참조하여 테이블을 자동으로 생성함.
       # ddl-auto설정을 create로 하면 애플리케이션이 실행될 때마다 테이블을 삭제(DROP)하고 다시 생성(CREATE)한다.
       # 기존의 테이블을 재사용하고 싶다면 ddl-auto설정을 update로 변경함.
-      ddl-auto: create
+      ddl-auto: update
       # use-new-id-generator-mappings은 Hibernate의 ID 생성 전략을 따라갈지 말지 결정하는 설정임
       # 스프링부트3 에서는 사용할 수 없는 설정임.
-      #use-new-id-generator-mappings: false
+      use-new-id-generator-mappings: false
     properties:
       hibernate:
         # []로 감싸 예외처리해주었음.
