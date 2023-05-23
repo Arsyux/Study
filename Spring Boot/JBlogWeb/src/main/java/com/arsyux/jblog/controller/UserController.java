@@ -2,6 +2,8 @@ package com.arsyux.jblog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +28,12 @@ public class UserController {
 		// 전달된 엔티티에 식별자 값이 설정되어 있지 않으면 INSERT 기능으로 동작한다.
 		userRepository.save(user);
 		return user.getUsername() + " 회원가입 성공";
+	}
+
+	@GetMapping("/user/get/{id}")
+	public @ResponseBody User getUser(@PathVariable int id) {
+		User findUser = userRepository.findById(id).get();
+		return findUser;
 	}
 	
 }
