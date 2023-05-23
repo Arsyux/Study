@@ -5,6 +5,11 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,5 +97,19 @@ public class UserController {
 	public @ResponseBody List<User> getUserList() {
 		return userRepository.findAll();
 	}
-	
+
+	// 페이징 처리
+	// @PageableDefault를 이용하면 PageRequest를 사용하는 것보다 쉽게 Pageable 객체를 생성할 수 있음.
+	@GetMapping("/user/page")
+	//@GetMapping("/user/page/{page}")
+	public @ResponseBody Page<User> getUserListPaging(
+			@PageableDefault(page = 0, size = 2, direction = Sort.Direction.DESC, sort = { "id",
+					"username" }) Pageable pageable/* @PathVariable int page */) {
+		// page에 해당하는 2개의 데이터 조회
+		// id와 username 내림차순 정렬
+		// Pageable pageable = PageRequest.of(page, 2, Sort.Direction.DESC, "id",
+		// "username");
+		return userRepository.findAll(pageable);
+	}
+
 }
