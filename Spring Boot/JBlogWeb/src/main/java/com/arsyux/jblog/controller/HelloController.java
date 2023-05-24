@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
 
+	/*
 	@GetMapping("/html")
 	public String html() {
 		// http://localhost:8080/html 입력시 이쪽으로 매핑됨
 		System.out.println("HTML파일이 요청됨");
 		return "redirect:hello.html";
 	}
+	*/
 
 	@GetMapping("/image")
 	public String image() {

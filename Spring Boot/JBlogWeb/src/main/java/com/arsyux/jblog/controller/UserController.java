@@ -100,8 +100,8 @@ public class UserController {
 
 	// 페이징 처리
 	// @PageableDefault를 이용하면 PageRequest를 사용하는 것보다 쉽게 Pageable 객체를 생성할 수 있음.
+	// @GetMapping("/user/page/{page}")
 	@GetMapping("/user/page")
-	//@GetMapping("/user/page/{page}")
 	public @ResponseBody Page<User> getUserListPaging(
 			@PageableDefault(page = 0, size = 2, direction = Sort.Direction.DESC, sort = { "id",
 					"username" }) Pageable pageable/* @PathVariable int page */) {
@@ -111,5 +111,7 @@ public class UserController {
 		// "username");
 		return userRepository.findAll(pageable);
 	}
-
+	
+	
+	
 }
