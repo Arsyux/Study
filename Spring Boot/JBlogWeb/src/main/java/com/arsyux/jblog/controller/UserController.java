@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arsyux.jblog.domain.RoleType;
 import com.arsyux.jblog.domain.User;
+import com.arsyux.jblog.dto.ResponseDTO;
 import com.arsyux.jblog.exception.JBlogException;
 import com.arsyux.jblog.persistence.UserRepository;
+import com.arsyux.jblog.service.UserService;
 
 @Controller
 public class UserController {
@@ -30,17 +33,20 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private UserService userService;
+
 	// REST 컨트롤러를 구현할 때는 등록 메소드에 PostMapping 어노테이션을 설정한다.
-	@PostMapping("/user")
-	public @ResponseBody String insertUser(@RequestBody User user) {
-		System.out.println("user 진입 : " + user.toString());
-		// JSON으로 전달된 회원 정보를 User 객체로 받기 위해 User 타입의 매개변수를 가진다.
-		user.setRole(RoleType.USER);
-		// userRepository를 이용하여 회원가입을 처리함.
-		// 전달된 엔티티에 식별자 값이 설정되어 있지 않으면 INSERT 기능으로 동작한다.
-		userRepository.save(user);
-		return user.getUsername() + " 회원가입 성공";
-	}
+//	@PostMapping("/user")
+//	public @ResponseBody String insertUser(@RequestBody User user) {
+//		System.out.println("user 진입 : " + user.toString());
+//		// JSON으로 전달된 회원 정보를 User 객체로 받기 위해 User 타입의 매개변수를 가진다.
+//		user.setRole(RoleType.USER);
+//		// userRepository를 이용하여 회원가입을 처리함.
+//		// 전달된 엔티티에 식별자 값이 설정되어 있지 않으면 INSERT 기능으로 동작한다.
+//		userRepository.save(user);
+//		return user.getUsername() + " 회원가입 성공";
+//	}
 
 	@GetMapping("/user/get/{id}")
 	public @ResponseBody User getUser(@PathVariable int id) {
@@ -115,6 +121,21 @@ public class UserController {
 	@GetMapping("/auth/insertUser")
 	public String insertUser() {
 		return "user/insertUser";
+	}
+
+	// ResponseDTO<String>이 아닌 와일드 카드인 이유는 어떤 타입의 데이터가 반환될지
+	// 특정할 수 없기 때문임.
+	// 지금은 회원가입 성공 문자열을 반환하지만, 경우에 따라 자바 객체나 컬렉션을 반환해야할 수 있음.
+	@PostMapping("/auth/insertUser")
+	public @ResponseBody ResponseDTO<?> insertUser(@RequestBody User user) {
+		User findUser = userService.getUser(user.getUsername());
+		System.out.println(findUser);
+		if (findUser.getUsername() == null) {
+			userService.insertUser(user);
+			return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + "님 회원가입 성공!");
+		} else {
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), user.getUsername() + "님은 이미 회원입니다.");
+		}
 	}
 
 }
