@@ -12,8 +12,8 @@
 <!-- 제이쿼리 -->
 <script src="/webjars/jquery/3.6.0/dist/jquery.min.js"></script>
 <!-- 서머노트 -->
-<link href="webjars/summernote/0.8.10/summernote-bs4.css" rel="stylesheet">
-<script src="webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
+<link href="/webjars/summernote/0.8.10/summernote-bs4.css" rel="stylesheet">
+<script src="/webjars/summernote/0.8.10/summernote-bs4.min.js"></script>
 
 </head>
 <body>

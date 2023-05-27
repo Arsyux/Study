@@ -4,8 +4,7 @@
 <div class="continer mt-3">
 	<form>
 		<div class="mb-3">
-			<label for="title">Title:</label>
-			<input type="text" class="form-control" id="title" placeholder="Enter title"></input>
+			<label for="title">Title:</label> <input type="text" class="form-control" id="title" placeholder="Enter title"></input>
 		</div>
 		<div class="mb-3">
 			<label for="content">Content:</label>
@@ -24,5 +23,6 @@
 		});
 	});
 </script>
+
 <script src="/js/post.js"></script>
 <%@ include file="../layout/footer.jsp"%>

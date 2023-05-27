@@ -15,5 +15,5 @@ public class PostController {
 	public String insertPost() {
 		return "post/insertPost";
 	}
-
+	
 }
