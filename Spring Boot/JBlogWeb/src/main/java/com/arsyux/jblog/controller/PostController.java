@@ -3,10 +3,14 @@ package com.arsyux.jblog.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,8 +27,9 @@ public class PostController {
 	private PostService postService;
 
 	@GetMapping({ "", "/" })
-	public String getPostList(Model model) {
-		model.addAttribute("postList", postService.getPostList());
+	public String getPostList(Model model,
+			@PageableDefault(size = 3, sort = "id", direction = Direction.DESC) Pageable pageable) {
+		model.addAttribute("postList", postService.getPostList(pageable));
 		return "index";
 	}
 
@@ -46,4 +51,9 @@ public class PostController {
 		return new ResponseDTO<>(HttpStatus.OK.value(), "새로운 포스트를 등록했습니다.");
 	}
 
+	@GetMapping("/post/{id}")
+	public String getPost(@PathVariable int id, Model model) {
+		model.addAttribute("post", postService.getPost(id));
+		return "post/getPost";
+	}
 }
