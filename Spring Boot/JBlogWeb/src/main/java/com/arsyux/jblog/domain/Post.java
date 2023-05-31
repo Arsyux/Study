@@ -1,7 +1,9 @@
 package com.arsyux.jblog.domain;
 
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -61,5 +65,18 @@ public class Post {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "userid")
 	private User user;
+	
+	// 포스트의 상세 화면에서는 해당 포스트에 속한 댓글 목록도 같이 출력되어야 한다.
+	// 즉, Post를 통해 Reply 정보도 조회할 수 있어야 한다.
+	// 이를 위해 Post와 Reply를 1:N(일 대 다) 관계로 한번 더 매핑한다.
+	// => Reply와 Post는 N:1, 1:N 관계로 양방향 매핑이 된다.
+	// 데이터베이스에서는 테이블의 양방향 매핑을 하나의 외래키만 사용하여 처리한다.
+	// 반면, 객체를 양방향으로 매핑하기 위해서는 관계에 참여하는 두 객체가 서로에 대한 참조변수를 가지고 있어야한다.
+	// 이때, 두 참조변수 중 하나를 선택하여 연관관계의 주인으로 설정해야 하는데
+	// 일반적으로 외래키 필드를 가진 엔티티를 연관관계의 주인으로 지정한다.
+	// 그리고 반대쪽 객체에 연관관계의 주인이 아님을 명시하기 위해 mappedBy 속성을 설정한다.
+	@OneToMany(mappedBy = "post" ,fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+	@OrderBy("id desc")
+	private List<Reply> replyList;
 	
 }

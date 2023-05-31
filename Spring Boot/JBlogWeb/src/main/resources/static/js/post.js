@@ -11,7 +11,7 @@ let postObject = {
 		});
 		$("#btn-delete").on("click", () => {
 			_this.deletePost();
-		})
+		});
 	},
 
 	insertPost: function() {
