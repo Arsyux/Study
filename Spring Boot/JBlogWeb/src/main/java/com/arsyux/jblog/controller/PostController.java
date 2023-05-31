@@ -9,9 +9,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -56,4 +58,23 @@ public class PostController {
 		model.addAttribute("post", postService.getPost(id));
 		return "post/getPost";
 	}
+
+	@GetMapping("/post/updatePost/{id}")
+	public String updatePost(@PathVariable int id, Model model) {
+		model.addAttribute("post", postService.getPost(id));
+		return "post/updatePost";
+	}
+
+	@PutMapping("/post")
+	public @ResponseBody ResponseDTO<?> updatePost(@RequestBody Post post) {
+		postService.updatePost(post);
+		return new ResponseDTO<>(HttpStatus.OK.value(), post.getId() + "번 포스트를 수정했습니다.");
+	}
+
+	@DeleteMapping("/post/{id}")
+	public @ResponseBody ResponseDTO<?> deletePost(@PathVariable int id) {
+		postService.deletePost(id);
+		return new ResponseDTO<>(HttpStatus.OK.value(), id + "번 포스트를 삭제하였습니다.");
+	}
+
 }
