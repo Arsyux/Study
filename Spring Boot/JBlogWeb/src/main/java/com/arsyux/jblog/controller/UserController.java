@@ -1,9 +1,13 @@
 package com.arsyux.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arsyux.jblog.domain.User;
+import com.arsyux.jblog.dto.UserDTO;
 import com.arsyux.jblog.dto.ResponseDTO;
 import com.arsyux.jblog.exception.JBlogException;
 import com.arsyux.jblog.persistence.UserRepository;
@@ -33,6 +40,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	// REST 컨트롤러를 구현할 때는 등록 메소드에 PostMapping 어노테이션을 설정한다.
 //	@PostMapping("/user")
@@ -125,9 +135,21 @@ public class UserController {
 	// 특정할 수 없기 때문임.
 	// 지금은 회원가입 성공 문자열을 반환하지만, 경우에 따라 자바 객체나 컬렉션을 반환해야할 수 있음.
 	@PostMapping("/auth/insertUser")
-	public @ResponseBody ResponseDTO<?> insertUser(@RequestBody User user) {
+	public @ResponseBody ResponseDTO<?> insertUser(@Valid @RequestBody UserDTO userDTO, BindingResult bindingResult) {
+		// UserDTO 객체에 대한 유효성 검사
+		if(bindingResult.hasErrors()) {
+			// 에러가 하나라도 있다면 에러 메시지를 Map에 등록
+			Map<String, String> errorMap = new HashMap<>();
+			for(FieldError error : bindingResult.getFieldErrors()) {
+				errorMap.put(error.getField(), error.getDefaultMessage());
+			}
+			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), errorMap);
+		}
+		
+		// UserDTO -> User 객체로 변환
+		User user = modelMapper.map(userDTO, User.class);
 		User findUser = userService.getUser(user.getUsername());
-		System.out.println(findUser);
+		
 		if (findUser.getUsername() == null) {
 			userService.insertUser(user);
 			return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + "님 회원가입 성공!");
