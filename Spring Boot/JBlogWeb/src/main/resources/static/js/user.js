@@ -32,10 +32,20 @@ let userObject = {
 		}).done(function(response) {
 			// 응답 메시지를 콘솔에 출력하고 메인 페이지로 이동
 			//console.log(response);
-			alert("가입 완료 : " + user.username);
-			location = "/";
-			// 에러 발생 시 error로 에러 정보를 받는다.
+			let status = response["status"];
+			if (status == 200) {
+				alert("가입 완료 : " + user.username);
+				location = "/";
+			} else {
+				let warn = "";
+				let errors = response["data"];
+				if(errors.username != null) warn = warn + errors.username + "\n";
+				if(errors.password != null) warn = warn + errors.password + "\n";
+				if(errors.email != null) warn = warn + errors.email;
+				alert(warn);
+			}
 		}).fail(function(error) {
+			// 에러 발생 시 error로 에러 정보를 받는다.
 			// 에러 메시지를 알림창에 출력
 			alert("에러 발생 : " + error);
 		});

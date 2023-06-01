@@ -27,9 +27,18 @@ let postObject = {
 			data: JSON.stringify(post),
 			contentType: "application/json; charset=utf-8"
 		}).done(function(response) {
-			let message = response["data"];
-			alert(message);
-			location = "/";
+			let status = response["status"];
+			if (status == 200) {
+				let message = response["data"];
+				alert(message);
+				location = "/";
+			} else {
+				let warn = "";
+				let errors = response["data"];
+				if (errors.title != null) warn = warn + errors.title + "\n";
+				if (errors.content != null) warn = warn + errors.content;
+				alert(warn);
+			}
 		}).fail(function(error) {
 			let message = error["data"];
 			alert("에러 발생 : " + message);
