@@ -5,11 +5,15 @@
 <div class="container mt-3">
 	<form>
 		<div class="mb-3">
-			<label for="username">Username:</label>
+			<label for="username">
+				<spring:message code="user.login.form.username"></spring:message> :
+			</label>
 			<input type="text" class="form-control" id="username" placeholder="Enter username"></input>
 		</div>
 		<div class="mb-3">
-			<label for="password">Password:</label>
+			<label for="password">
+				<spring:message code="user.login.form.password"></spring:message> :
+			</label>
 			<input type="password" class="form-control" id="password" placeholder="Enter password"></input>
 		</div>
 	</form>

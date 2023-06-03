@@ -4,6 +4,8 @@
 	<p>Created by Arsyux</p>
 	<p>Tell: 000-0000-0000</p>
 	<p>Address: 한국</p>
+	<a href="/auth/login?lang=ko">한국어</a>
+	<a href="/auth/login?lang=en">English</a>
 </div>
 </body>
 </html>

@@ -6,6 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+
 @Configuration
 public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
 
@@ -23,7 +29,7 @@ public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
 		// 이러한 문제를 해결하기위해 ModelMapper라이브러리를 사용하는 것임.
 		return new ModelMapper();
 	}
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 블로그에 접속하는 순간 AuthenticateInterceptor 클래스의 preHandle() 메소드가 동작함
@@ -31,5 +37,32 @@ public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
 		// 지금은 인덱스 페이지 경로에 대해서만 처리하고 있지만,
 		// 인증이 필요한 경로를 계속 추가할 수 있다.
 		registry.addInterceptor(new AuthenticateInterceptor()).addPathPatterns("/", "/post/**");
+		registry.addInterceptor(localeChaneInterceptor());
 	}
+
+	// 다국어 설정
+	// 작성된 2개의 properties 메시지 파일을 모두 메모리에 로딩한 후
+	// 메시지의 키를 이용하여 JSP 파일을 작성하면 브라우저의 로케일에 따라 해당하는 메시지가 제공된다.
+	// 웹 애플리케이션에 다국어를 적용하기 위해서는 2가지 객체가 필요하다.
+	// 첫번째는 MessageSource 객체고, 두 번째는 브라우저에서 전송한 로케일 정보를 추출하여 유지하는 LocaleResolver객체다.
+	@Bean("messageSource")
+	public MessageSource messageSource() {
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		messageSource.setBasename("message/messageSource");
+		return messageSource;
+	}
+
+	@Bean
+	public LocaleResolver localeResolver() {
+		return new SessionLocaleResolver();
+	}
+
+	// 로케일 변경을 위해 인터셉터를 추가로 등록
+	@Bean
+	public LocaleChangeInterceptor localeChaneInterceptor() {
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
+		localeChangeInterceptor.setParamName("lang");
+		return localeChangeInterceptor;
+	}
+	
 }
