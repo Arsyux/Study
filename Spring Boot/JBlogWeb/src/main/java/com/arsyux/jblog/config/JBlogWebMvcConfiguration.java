@@ -36,7 +36,11 @@ public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
 		// 세션에 사용자 정보가 없으면 무조건 로그인 화면으로 이동함.
 		// 지금은 인덱스 페이지 경로에 대해서만 처리하고 있지만,
 		// 인증이 필요한 경로를 계속 추가할 수 있다.
-		registry.addInterceptor(new AuthenticateInterceptor()).addPathPatterns("/", "/post/**");
+		// 소스 코드 정리
+		// AuthenticationInterceptor.java 삭제
+		// LoginController.java 삭제
+		// login.js 삭제
+		//registry.addInterceptor(new AuthenticateInterceptor()).addPathPatterns("/", "/post/**");
 		registry.addInterceptor(localeChaneInterceptor());
 	}
 
