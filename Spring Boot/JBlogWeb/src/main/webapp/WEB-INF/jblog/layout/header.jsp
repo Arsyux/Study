@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+
+<!-- 로그인 인증에 성공한 브라우저만 접근할 수 있는 영역 -->
+<sec:authorize access="isAuthenticated()">
+	<!-- principal은 로그인 성공한 사용자(User) 객체에 접근할 수 있는 변수 -->
+	<sec:authentication var="principal" property="principal" />
+</sec:authorize>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,21 +34,19 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="mynavbar">
-				<c:choose>
-					<c:when test="${empty sessionScope.principal }">
-						<ul class="navbar-nav me-auto">
-							<li class="nav-item"><a class="nav-link" href="/auth/login">로그인</a></li>
-							<li class="nav-item"><a class="nav-link" href="/auth/insertUser">회원가입</a></li>
-						</ul>
-					</c:when>
-					<c:otherwise>
-						<ul class="navbar-nav me-auto">
-							<li class="nav-item"><a class="nav-link" href="/auth/updateUser">회원정보</a></li>
-							<li class="nav-item"><a class="nav-link" href="/post/insertPost">글쓰기</a></li>
-							<li class="nav-item"><a class="nav-link" href="/auth/logout">로그아웃</a></li>
-						</ul>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="${ principal == null }">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item"><a class="nav-link" href="/auth/login">로그인</a></li>
+						<li class="nav-item"><a class="nav-link" href="/auth/insertUser">회원가입</a></li>
+					</ul>
+				</c:if>
+				<c:if test="${ principal != null }">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item"><a class="nav-link" href="/auth/updateUser">회원정보</a></li>
+						<li class="nav-item"><a class="nav-link" href="/post/insertPost">글쓰기</a></li>
+						<li class="nav-item"><a class="nav-link" href="/auth/logout">로그아웃</a></li>
+					</ul>
+				</c:if>
 			</div>
 		</div>
 	</nav>

@@ -112,6 +112,12 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- JSP용 스프핑 시큐리티 라이브러리 -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -13,7 +13,7 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
+public class JBlogWebMvcConfiguration /* implements WebMvcConfigurer */ {
 
 	@Bean
 	public ModelMapper modelMapper() {
@@ -30,7 +30,7 @@ public class JBlogWebMvcConfiguration implements WebMvcConfigurer {
 		return new ModelMapper();
 	}
 
-	@Override
+	//@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		// 블로그에 접속하는 순간 AuthenticateInterceptor 클래스의 preHandle() 메소드가 동작함
 		// 세션에 사용자 정보가 없으면 무조건 로그인 화면으로 이동함.

@@ -156,5 +156,10 @@ public class UserController {
 			return new ResponseDTO<>(HttpStatus.BAD_REQUEST.value(), user.getUsername() + "님은 이미 회원입니다.");
 		}
 	}
+	
+	@GetMapping("/auth/login")
+	public String login() {
+		return "system/login";
+	}
 
 }
