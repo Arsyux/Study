@@ -8,13 +8,13 @@
 			<label for="username">
 				<spring:message code="user.login.form.username"></spring:message> :
 			</label>
-			<input type="text" class="form-control" name="username" placeholder="Enter username" value="arsyux"></input>
+			<input type="text" class="form-control" name="username" placeholder="Enter username"></input>
 		</div>
 		<div class="mb-3">
 			<label for="password">
 				<spring:message code="user.login.form.password"></spring:message> :
 			</label>
-			<input type="password" class="form-control" name="password" placeholder="Enter password" value="123"></input>
+			<input type="password" class="form-control" name="password" placeholder="Enter password"></input>
 		</div>
 
 		<button id="btn-login" class="btn btn-secondary">로그인</button>

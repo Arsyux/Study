@@ -1,14 +1,32 @@
-package com.arsyux.jblog.config;
+package com.arsyux.jblog.config;                                               
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import com.arsyux.jblog.security.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	// 사용자가 입력한 username으로 사용자 인증하는 객체
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService;
+	
+	// BCryptPasswordEncoder 객체를 생성하는 메소드를 추가
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	
 	// @EnableWebSecurity
 	// 해당 설정 적용시 WebSecurityEnablerConfiguration이라는 자동 설정 클래스는 더이상 동작하지 않음.
 	// => 사용자가 원하는 방향으로 시큐리티를 커스터마이징 할 수 있음.
@@ -36,5 +54,13 @@ public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 		
 		// 로그아웃 설정
 		http.logout().logoutUrl("/auth/logout").logoutSuccessUrl("/");
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		// AuthenticationManagerBuilder가 AuthenticationManager를 생성할 때
+		// UserDetailsService를 이용하도록 설정
+		// 이제부터 로그인이 필요한 경우 USERS 테이블에 등록된 회원 정보를 이용
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 }
