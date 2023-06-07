@@ -10,7 +10,7 @@
  - Tomcat 9.0.73
  - Maria DB 10.7.6
 
-< Spring Settings >
+< Spring Boot Settings >
  - WINDOWS 10
  - Zulu jdk 17.0.7
  - SpringToolSuite4 4.18.1
@@ -19,3 +19,5 @@
  - Mybatis 2.2.2
  - Bootstrap 5.1.3
  - jQuery 3.6.0
+ - JPA
+ - Spring Security
