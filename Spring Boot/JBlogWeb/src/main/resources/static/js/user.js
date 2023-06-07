@@ -8,6 +8,9 @@ let userObject = {
 		$("#btn-save").on("click", () => {
 			_this.insertUser();
 		});
+		$("#btn-update").on("click", () => {
+			_this.updateUser();
+		});
 	},
 
 	insertUser: function() {
@@ -39,9 +42,9 @@ let userObject = {
 			} else {
 				let warn = "";
 				let errors = response["data"];
-				if(errors.username != null) warn = warn + errors.username + "\n";
-				if(errors.password != null) warn = warn + errors.password + "\n";
-				if(errors.email != null) warn = warn + errors.email;
+				if (errors.username != null) warn = warn + errors.username + "\n";
+				if (errors.password != null) warn = warn + errors.password + "\n";
+				if (errors.email != null) warn = warn + errors.email;
 				alert(warn);
 			}
 		}).fail(function(error) {
@@ -51,6 +54,28 @@ let userObject = {
 		});
 	},
 
+	updateUser: function() {
+		alert("회원 정보 수정");
+		let user = {
+			id: $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		}
+		$.ajax({
+			type: "PUT",
+			url: "/user",
+			data: JSON.stringify(user),
+			contentType: "application/json; charset=utf-8",
+		}).done(function(response) {
+			let message = response["data"];
+			alert(message);
+			location = "/";
+		}).fail(function(error) {
+			let message = error["data"];
+			alert("문제 발생 : " + message);
+		});
+	},
 }
 
 // userObject 객체의 init() 함수 호출

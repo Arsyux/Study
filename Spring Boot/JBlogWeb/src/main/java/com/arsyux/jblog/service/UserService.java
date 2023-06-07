@@ -21,12 +21,12 @@ public class UserService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	
+
 	@Transactional
 	public void insertUser(User user) {
 		// 비밀번호를 암호화하여 설정
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		
+
 		user.setRole(RoleType.USER);
 		userRepository.save(user);
 	}
@@ -42,6 +42,21 @@ public class UserService {
 			return new User();
 		});
 
+		return findUser;
+	}
+
+	@Transactional
+	public User updateUser(User user) {
+		// 스프링 시큐리티는 사용자가 입력한 정보를 바탕으로 회원을 조회하고,
+		// 조회된 정보를 이용하여 Authenrication을 생성함
+		// 이렇게 생성된 Authentication이 자동으로 SecurityContext 객체에 등록됨
+		// 이때 Authentication을 포함하는 SecurityContext는 자동으로 HttpSession에 등록된다는 것이 중요함.
+		// 이렇게 세션에 등록된 SecurityContext에는 컨트롤러에서 @AuthenticationPrincipal 어노테이션을 이용하여 접근
+		User findUser = userRepository.findById(user.getId()).get();
+		findUser.setUsername(user.getUsername());
+		findUser.setPassword(passwordEncoder.encode(user.getPassword()));
+		findUser.setEmail(user.getEmail());
+		
 		return findUser;
 	}
 

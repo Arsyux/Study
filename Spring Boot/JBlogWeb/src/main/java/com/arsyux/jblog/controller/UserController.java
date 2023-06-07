@@ -2,7 +2,6 @@ package com.arsyux.jblog.controller;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +27,7 @@ import com.arsyux.jblog.dto.UserDTO;
 import com.arsyux.jblog.dto.ResponseDTO;
 import com.arsyux.jblog.exception.JBlogException;
 import com.arsyux.jblog.persistence.UserRepository;
+import com.arsyux.jblog.security.UserDetailsImpl;
 import com.arsyux.jblog.service.UserService;
 
 @Controller
@@ -73,6 +74,7 @@ public class UserController {
 
 	// 빠른 테스트를 위해 컨트롤러 메소드에 @Transactional을 적용했지만,
 	// 원래는 서비스 클래스에서 리포지터리를 호출하고 서비스 메소드에 @Transactional 어노테이션을 적용해야한다.
+	/*
 	@Transactional
 	@PutMapping("/user")
 	public @ResponseBody String updateUser(@RequestBody User user) {
@@ -95,7 +97,8 @@ public class UserController {
 		// userRepository.save(findUser);
 		return "데이터 수정 성공";
 	}
-
+	*/
+	
 	// 회원 삭제
 	@DeleteMapping("/user/{id}")
 	public @ResponseBody String deleteUser(@PathVariable int id) {
@@ -160,6 +163,17 @@ public class UserController {
 	@GetMapping("/auth/login")
 	public String login() {
 		return "system/login";
+	}
+	
+	@GetMapping("/user/updateUser")
+	public String updateUser() {
+		return "user/updateUser";
+	}
+	
+	@PutMapping("/user")
+	public @ResponseBody ResponseDTO<?> updateUser(@RequestBody User user, @AuthenticationPrincipal UserDetailsImpl principal) {
+		principal.setUser(userService.updateUser(user));
+		return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + " 수정 완료");
 	}
 
 }
