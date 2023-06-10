@@ -118,6 +118,12 @@
 			<artifactId>spring-security-taglibs</artifactId>
 		</dependency>
 		
+		<!-- gson 라이브러리 -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
