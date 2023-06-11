@@ -1,6 +1,8 @@
 package com.arsyux.jblog.service;
 
 
+import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
 
 @Service
 public class KakaoLoginService {
@@ -34,7 +38,21 @@ public class KakaoLoginService {
 		// HTTP 요청 및 응답받기
 		ResponseEntity<String> responseEntity = restTemplate.exchange("https://kauth.kakao.com/oauth/token", HttpMethod.POST, requestEntity, String.class);
 		
-		return responseEntity.getBody();
+		// HTTP 응답 본문(body) 정보 반환
+		String jsonData = responseEntity.getBody();
+		
+		// JSON 데이터에서 액세스 토큰 정보만 추출
+		Gson gsonObj = new Gson();
+		Map<?, ?> data = gsonObj.fromJson(jsonData, Map.class);
+		
+		return (String) data.get("access_token");
+	}
+	
+	public String getUserInfo(String accessToken) {
+		// HttpHeader 생성
+		HttpHeaders header = new HttpHeaders();
+		header.add("Authorization", "Bearer" + accessToken);
+		header.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 	}
 	
 }
