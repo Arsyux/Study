@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JBlogWebApplication {
 
 	public static void main(String[] args) {
+		new KakaoHelper();
 		SpringApplication.run(JBlogWebApplication.class, args);
 	}
 
