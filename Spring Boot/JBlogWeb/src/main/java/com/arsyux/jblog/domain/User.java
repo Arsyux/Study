@@ -62,4 +62,11 @@ public class User {
 
 	@CreationTimestamp
 	private Timestamp createDate;// 현재 시간이 기본값으로 등록되도록 설정
+	
+	// EnumType.STRING으로 설정하면 enum타입의 데이터를 문자열로 저장한다.
+	// 즉, OauthType의 oauth 변수의 값이 OAuthType.KAKAO로 지정되면 KAKAO라는 문자열을 할당하는 것.
+	// 반면, EnumType.ORDINAL로 설정하면 enum에 등록된 순서에 해당하는 숫자를 할당한다.
+	@Enumerated(EnumType.STRING)
+	private OAuthType oauth;
+	
 }

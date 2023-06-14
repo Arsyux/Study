@@ -6,7 +6,7 @@ public class KakaoHelper {
 
 	public static String id = "";
 	public static String password = "";
-
+	
 	public static void LoadData() {
 		id = "";
 		password = "";
@@ -19,11 +19,11 @@ public class KakaoHelper {
 				}
 				id += (char) i;
 			}
-			System.out.println("id: " + id);
+			//System.out.println("id: " + id);
 			while ((i = fis.read()) > -1) {
 				password += (char) i;
 			}
-			System.out.println("password: " + password);
+			//System.out.println("password: " + password);
 		} catch (Exception e) {
 			id = "";
 			password = "";

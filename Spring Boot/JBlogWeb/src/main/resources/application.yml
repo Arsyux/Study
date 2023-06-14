@@ -53,3 +53,8 @@ spring:
       hibernate:
         # []로 감싸 예외처리해주었음.
         "[format_sql]": true
+
+# 카카오 비밀번호
+#kakao:
+#  default:
+#    password: 1234

@@ -1,7 +1,5 @@
 package com.arsyux.jblog.controller;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arsyux.jblog.domain.Reply;
-import com.arsyux.jblog.domain.User;
 import com.arsyux.jblog.dto.ResponseDTO;
 import com.arsyux.jblog.security.UserDetailsImpl;
 import com.arsyux.jblog.service.ReplyService;

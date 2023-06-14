@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arsyux.jblog.KakaoHelper;
+import com.arsyux.jblog.domain.OAuthType;
 import com.arsyux.jblog.domain.User;
 import com.arsyux.jblog.dto.UserDTO;
 import com.arsyux.jblog.dto.ResponseDTO;
@@ -45,6 +45,9 @@ public class UserController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	//@Value("${kakao.default.password}")
+	//private String kakaoPassword;
+	
 	// REST 컨트롤러를 구현할 때는 등록 메소드에 PostMapping 어노테이션을 설정한다.
 //	@PostMapping("/user")
 //	public @ResponseBody String insertUser(@RequestBody User user) {
@@ -176,6 +179,13 @@ public class UserController {
 	
 	@PutMapping("/user")
 	public @ResponseBody ResponseDTO<?> updateUser(@RequestBody User user, @AuthenticationPrincipal UserDetailsImpl principal) {
+		// 회원 정보 수정 전, 로그인에 성공한 사용자가 카카오 회원인지 확인
+		if(principal.getUser().getOauth().equals(OAuthType.KAKAO)) {
+			// 카카오 회원인 경우 비밀번호 고정
+			user.setPassword(KakaoHelper.password);
+		}
+		
+		// 회원 정보 수정 및 세션 갱신
 		principal.setUser(userService.updateUser(user));
 		return new ResponseDTO<>(HttpStatus.OK.value(), user.getUsername() + " 수정 완료");
 	}

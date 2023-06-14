@@ -3,6 +3,7 @@ package com.arsyux.jblog.service;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,11 +14,17 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.arsyux.jblog.KakaoHelper;
+import com.arsyux.jblog.domain.OAuthType;
+import com.arsyux.jblog.domain.RoleType;
+import com.arsyux.jblog.domain.User;
 import com.google.gson.Gson;
 
 @Service
 public class KakaoLoginService {
 
+	//@Value("${kakao.default.password}")
+	//private String kakaoPassword;
+	
 	public String getAccessToken(String code) {
 		// HttpHeader 생성 (MIME 종류)
 		HttpHeaders header = new HttpHeaders();
@@ -49,10 +56,10 @@ public class KakaoLoginService {
 		return (String) data.get("access_token");
 	}
 	
-	public String getUserInfo(String accessToken) {
+	public User getUserInfo(String accessToken) {
 		// HttpHeader 생성
 		HttpHeaders header = new HttpHeaders();
-		header.add("Authorization", "Bearer" + accessToken);
+		header.add("Authorization", "Bearer " + accessToken);
 		header.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 		
 		// HttpHeader와 HttpBody를 하나의 객체에 담기(body 정보는 생략 가능)
@@ -65,7 +72,25 @@ public class KakaoLoginService {
 		ResponseEntity<String> responseEntity = restTemplate.exchange("https://kapi.kakao.com/v2/user/me", HttpMethod.POST, requestEntity, String.class);
 		
 		// 카카오 인증 서버가 반환한 사용자 정보
-		return responseEntity.getBody();
+		//return responseEntity.getBody();
+		String userInfo = responseEntity.getBody();
+		
+		// JSON 데이터에서 추출한 정보로 User 객체 설정
+		Gson gsonObj = new Gson();
+		Map<?, ?> data = gsonObj.fromJson(userInfo, Map.class);
+		
+		//Double id = (Double) (data.get("id"));
+		//String nickname = (String) ((Map<?, ?>) (data.get("properties"))).get("nickname");
+		String email = (String) ((Map<?, ?>) (data.get("kakao_account"))).get("email");
+		
+		User user = new User();
+		user.setUsername(email);
+		user.setPassword(KakaoHelper.password);
+		user.setEmail(email);
+		user.setRole(RoleType.USER);
+		user.setOauth(OAuthType.KAKAO);
+		
+		return user;
 	}
 	
 }

@@ -3,6 +3,7 @@ package com.arsyux.jblog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,6 +20,11 @@ public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 	// 사용자가 입력한 username으로 사용자 인증하는 객체
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
+	
+	@Bean
+	public AuthenticationManager authticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
 	
 	// BCryptPasswordEncoder 객체를 생성하는 메소드를 추가
 	@Bean

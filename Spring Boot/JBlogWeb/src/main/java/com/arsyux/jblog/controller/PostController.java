@@ -1,6 +1,5 @@
 package com.arsyux.jblog.controller;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.arsyux.jblog.domain.Post;
-import com.arsyux.jblog.domain.User;
 import com.arsyux.jblog.dto.PostDTO;
 import com.arsyux.jblog.dto.ResponseDTO;
 import com.arsyux.jblog.security.UserDetailsImpl;

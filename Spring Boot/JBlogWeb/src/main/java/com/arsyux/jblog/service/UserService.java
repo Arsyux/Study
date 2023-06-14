@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.arsyux.jblog.domain.OAuthType;
 import com.arsyux.jblog.domain.RoleType;
 import com.arsyux.jblog.domain.User;
 import com.arsyux.jblog.persistence.UserRepository;
@@ -26,8 +27,10 @@ public class UserService {
 	public void insertUser(User user) {
 		// 비밀번호를 암호화하여 설정
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-
 		user.setRole(RoleType.USER);
+		if(user.getOauth() == null) {
+			user.setOauth(OAuthType.JBLOG);
+		}
 		userRepository.save(user);
 	}
 
