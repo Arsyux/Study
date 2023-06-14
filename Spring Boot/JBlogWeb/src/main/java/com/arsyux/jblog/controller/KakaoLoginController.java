@@ -15,6 +15,12 @@ public class KakaoLoginController {
 	
 	@GetMapping("/oauth/kakao")
 	public @ResponseBody String kakaoCallback(String code) {
+		return "카카오 서버로부터 받은 CODE 정보: " + code;
+	}
+	
+	/*
+	@GetMapping("/oauth/kakao")
+	public @ResponseBody String kakaoCallback(String code) {
 		// 1. 인증 서버로부터 받은 CODE를 이용하여 액세스 토큰을 얻는다.
 		String accessToken = kakaoCallback(code);
 		
@@ -24,7 +30,7 @@ public class KakaoLoginController {
 		//System.out.println(accessToken);
 		return userInfo;
 	}
-	
+	*/
 	
 	
 }
