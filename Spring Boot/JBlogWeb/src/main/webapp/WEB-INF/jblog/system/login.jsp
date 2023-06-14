@@ -17,7 +17,8 @@
 			<input type="password" class="form-control" name="password" placeholder="Enter password"></input>
 		</div>
 
-		<button id="btn-login" class="btn btn-secondary">로그인</button>
+		<button id="btn-login" class="btn btn-secondary"><spring:message code="user.login.form.login_btn"/></button>
+		<a href="#"><img height="38px" src="/image/kakao_login_btn.png"></a>
 	</form>
 </div>
 
