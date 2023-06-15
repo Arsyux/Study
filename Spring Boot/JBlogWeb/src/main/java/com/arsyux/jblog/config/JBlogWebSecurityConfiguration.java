@@ -8,9 +8,9 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.arsyux.jblog.security.OAuth2UserDetailsServiceImpl;
 import com.arsyux.jblog.security.UserDetailsServiceImpl;
 
 @Configuration
@@ -21,16 +21,22 @@ public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 	@Autowired
 	private UserDetailsServiceImpl userDetailsService;
 	
+	@Autowired
+	private OAuth2UserDetailsServiceImpl oauth2DetailsService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
 	@Bean
 	public AuthenticationManager authticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 	
 	// BCryptPasswordEncoder 객체를 생성하는 메소드를 추가
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	//@Bean
+	//public PasswordEncoder passwordEncoder() {
+	//	return new BCryptPasswordEncoder();
+	//}
 	
 	
 	// @EnableWebSecurity
@@ -60,6 +66,14 @@ public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 		
 		// 로그아웃 설정
 		http.logout().logoutUrl("/auth/logout").logoutSuccessUrl("/");
+		
+		// 구글 로그인 설정
+		http.oauth2Login()
+		// OAuth2로 사용자 정보를 가져옴
+		.userInfoEndpoint()
+		// userInfoEndpoint()로 가져온 사용자 정보를 이용해서
+		// auth2DetailsService 객체로 사후 처리한다.
+		.userService(oauth2DetailsService);
 	}
 	
 	@Override
@@ -67,6 +81,6 @@ public class JBlogWebSecurityConfiguration extends WebSecurityConfigurerAdapter 
 		// AuthenticationManagerBuilder가 AuthenticationManager를 생성할 때
 		// UserDetailsService를 이용하도록 설정
 		// 이제부터 로그인이 필요한 경우 USERS 테이블에 등록된 회원 정보를 이용
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
 }

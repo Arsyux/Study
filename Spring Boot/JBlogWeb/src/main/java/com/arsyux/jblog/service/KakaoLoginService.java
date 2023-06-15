@@ -13,7 +13,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.arsyux.jblog.KakaoHelper;
 import com.arsyux.jblog.domain.OAuthType;
 import com.arsyux.jblog.domain.RoleType;
 import com.arsyux.jblog.domain.User;
@@ -22,8 +21,11 @@ import com.google.gson.Gson;
 @Service
 public class KakaoLoginService {
 
-	//@Value("${kakao.default.password}")
-	//private String kakaoPassword;
+	@Value("${kakao.default.id}")
+	private String kakaoId;
+	
+	@Value("${kakao.default.password}")
+	private String kakaoPassword;
 	
 	public String getAccessToken(String code) {
 		// HttpHeader 생성 (MIME 종류)
@@ -33,7 +35,7 @@ public class KakaoLoginService {
 		// HttpBody 생성 (4개의 필 수 매개 변수 설정)
 		MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
 		body.add("grant_type",	"authorization_code");
-		body.add("client_id", KakaoHelper.id);
+		body.add("client_id", kakaoId);
 		body.add("redirect_uri", "http://localhost:8080/oauth/kakao");
 		body.add("code", code);
 		
@@ -85,7 +87,7 @@ public class KakaoLoginService {
 		
 		User user = new User();
 		user.setUsername(email);
-		user.setPassword(KakaoHelper.password);
+		user.setPassword(kakaoPassword);
 		user.setEmail(email);
 		user.setRole(RoleType.USER);
 		user.setOauth(OAuthType.KAKAO);

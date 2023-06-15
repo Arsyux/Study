@@ -7,16 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class JBlogWebApplication {
 
 	public static void main(String[] args) {
-
-		System.out.println("카카오 데이터 로드중...");
-		KakaoHelper.LoadData();
-		
-		if (!KakaoHelper.id.equals("")) {
-			System.out.println("카카오 데이터 로드 완료!");
-			SpringApplication.run(JBlogWebApplication.class, args);
-		} else {
-			System.out.println("카카오 데이터 로드중 에러 발생!");
-		}
+		SpringApplication.run(JBlogWebApplication.class, args);
 	}
 
 }

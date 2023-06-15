@@ -1,15 +1,14 @@
 package com.arsyux.jblog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.arsyux.jblog.KakaoHelper;
 import com.arsyux.jblog.domain.User;
 import com.arsyux.jblog.service.KakaoLoginService;
 import com.arsyux.jblog.service.UserService;
@@ -26,8 +25,8 @@ public class KakaoLoginController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
-	// @Value("${kakao.default.password}")
-	//private String kakaoPassword;
+	@Value("${kakao.default.password}")
+	private String kakaoPassword;
 
 	// @ResponseBody를 제거해야 인덱스 페이지로의 전환이 가능하다.
 	@GetMapping("/oauth/kakao")
@@ -48,7 +47,7 @@ public class KakaoLoginController {
 
 		// 4. 카카오로 받은 사용자 정보를 기반으로 인증을 처리한다.
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-				kakaoUser.getUsername(), KakaoHelper.password);
+				kakaoUser.getUsername(), kakaoPassword);
 		
 		Authentication authentication = authenticationManager.authenticate(authenticationToken);
 		

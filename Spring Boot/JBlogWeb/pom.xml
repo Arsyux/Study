@@ -124,6 +124,12 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 		
+		<!-- Oauth2 Client 스타터 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

@@ -53,8 +53,22 @@ spring:
       hibernate:
         # []로 감싸 예외처리해주었음.
         "[format_sql]": true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
+            scope: email, profile
+    
+# 카카오 ID, 비밀번호
+kakao:
+  default:
+    id: ${KAKAO_ID}
+    password: ${KAKAO_PASSWORD}
 
-# 카카오 비밀번호
-#kakao:
-#  default:
-#    password: 1234
+# 구글 비밀번호
+google:
+  default:
+    password: ${GOOGLE_PASSWORD}
