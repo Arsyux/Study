@@ -23,3 +23,20 @@
 
 3. MariaDB를 이용한 데이터베이스 구축 절차
  - 데이터 베이스 생성 -> 테이블 생성 -> 데이터 입력 -> 데이터 조회/활용
+
+CREATE DATABASE shopdb;
+
+USE shopdb;
+
+CREATE TABLE memberTBL (
+memberID char(8) PRIMARY KEY,
+memberName char(5) NOT NULL,
+memberAddress char(20)
+);
+CREATE TABLE productTBL (
+productName char(4) not null,
+cost int not null,
+makeDate datetime,
+company char(5),
+amount int not null
+);
